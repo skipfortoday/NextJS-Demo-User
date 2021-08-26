@@ -16,7 +16,6 @@
     "mui-datatables": "^3.7.7",
     "next": "latest",
     "next-redux-wrapper": "latest",
-    "node-adodb": "^5.0.3",
     "node-telegram-bot-api": "^0.53.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
