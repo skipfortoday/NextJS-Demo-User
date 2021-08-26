@@ -1,5 +1,5 @@
 const config = {
-  baseURL: "http://192.168.11.1:3000",
+  baseURL: "http://localhost:8080",
   Database: "SinkronDB",
   ipDatabase: "192.168.11.1",
   ipJK1: "SERVER-JK1",
