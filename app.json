@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "synchron-server",
+      "script": "./server.js",
+      "error_file": "./logs/err.log",
+      "out_file": "./logs/out.log",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "3000"
+      }
+    }
+  ]
+}
