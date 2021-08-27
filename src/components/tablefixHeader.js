@@ -11,6 +11,7 @@ const TablefixHeader = (props) => {
     filterType: "dropdown",
     responsive: "standard",
     fixedHeader: true,
+    selectableRows: false,
     fixedSelectColumn: true,
     tableBodyHeight: "400px",
     customToolbarSelect: (selectedRows) => (
