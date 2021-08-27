@@ -244,9 +244,8 @@ export default function BottomNav({ children }) {
             )}
 
             <Typography variant="h6" className={classes.title}>
-              Rest Server
+              Users Demo
             </Typography>
-            <Button color="inherit">Online</Button>
           </Toolbar>
         </AppBar>
       </div>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import TablefixHeader from "../src/components/tablefixHeader";
-import { getUsersList } from "../src/actions/usersAction";
+import { clearUsersList, getUsersList } from "../src/actions/usersAction";
 import firebase from "../src/config/firebase";
 import { connect } from "react-redux";
 import BottomNav from "../src/layouts/bottomNav";
@@ -12,6 +12,13 @@ const mapStateToProps = (state) => {
 };
 
 const columns = [
+  {
+    name: "id",
+    label: "ID",
+    options: {
+      filter: false,
+    },
+  },
   {
     name: "name",
     label: "Nama",
@@ -35,6 +42,7 @@ const Index = (props) => {
         .database()
         .ref("/users")
         .on("value", (snapshot) => {
+          props.dispatch(clearUsersList());
           props.dispatch(getUsersList());
         });
     }

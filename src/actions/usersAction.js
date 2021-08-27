@@ -31,6 +31,18 @@ export const getUsersList = () => {
   };
 };
 
+export const clearUsersList = () => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_USERS_LIST,
+      payload: {
+        data: false,
+        errorMessage: false,
+      },
+    });
+  };
+};
+
 export const getUserDetail = (id) => {
   return (dispatch) => {
     axios
