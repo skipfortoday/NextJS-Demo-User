@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USERS_LIST, GET_USER_DETAIL } from "../constants";
+import { GET_USERS_LIST, GET_USER_DETAIL, POST_USER_ADD } from "../constants";
 import conf from "../config";
 
 export const getUsersList = () => {
@@ -7,10 +7,14 @@ export const getUsersList = () => {
     axios
       .get(`${conf.baseURL}/api/users`)
       .then(function (response) {
+        let array = [];
+        for (var key in response.data.data) {
+          array.push(response.data.data[key]);
+        }
         dispatch({
           type: GET_USERS_LIST,
           payload: {
-            data: response.data.data,
+            data: array,
             errorMessage: false,
           },
         });
@@ -46,6 +50,32 @@ export const getUserDetail = (id) => {
           payload: {
             data: false,
             errorMessage: error,
+          },
+        });
+      });
+  };
+};
+
+export const postUserAdd = (data) => {
+  console.log(data);
+  return (dispatch) => {
+    axios
+      .post(`http://192.168.0.25:8080/api/users`, data)
+      .then(function (response) {
+        dispatch({
+          type: POST_USER_ADD,
+          payload: {
+            data: response.data.message,
+            errorMessage: false,
+          },
+        });
+      })
+      .catch(function (error) {
+        dispatch({
+          type: POST_USER_ADD,
+          payload: {
+            data: false,
+            errorMessage: error.message,
           },
         });
       });

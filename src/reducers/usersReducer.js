@@ -1,10 +1,12 @@
-import { GET_USERS_LIST, GET_USER_DETAIL } from "../constants";
+import { GET_USERS_LIST, GET_USER_DETAIL, POST_USER_ADD } from "../constants";
 
 let initialState = {
   getUsersList: false,
   errorUsersList: false,
   getUserDetail: false,
   errorUserDetail: false,
+  postUserAdd: false,
+  erroUserAdd: false,
 };
 
 const users = (state = initialState, action) => {
@@ -20,6 +22,12 @@ const users = (state = initialState, action) => {
         ...state,
         getUserDetail: action.payload.data,
         erroUserDetail: action.payload.errorMessage,
+      };
+    case POST_USER_ADD:
+      return {
+        ...state,
+        postUserAdd: action.payload.data,
+        erroUserAdd: action.payload.errorMessage,
       };
     default:
       return state;

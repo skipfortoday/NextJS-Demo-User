@@ -1,5 +1,5 @@
 const config = {
-  baseURL: "http://localhost:8080",
+  baseURL: "https://user-express.vercel.app",
   Database: "SinkronDB",
   ipDatabase: "192.168.11.1",
   ipJK1: "SERVER-JK1",

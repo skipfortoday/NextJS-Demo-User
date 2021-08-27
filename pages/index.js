@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import TablefixHeader from "../src/components/tablefixHeader";
-import { getBA } from "../src/actions/kartu-pasien-action";
+import { getUsersList } from "../src/actions/usersAction";
 import firebase from "../src/config/firebase";
 import { connect } from "react-redux";
 import BottomNav from "../src/layouts/bottomNav";
 
-const Index = () => {
+const mapStateToProps = (state) => {
   return {
     getUsersList: state.users.getUsersList,
   };
@@ -13,19 +13,15 @@ const Index = () => {
 
 const columns = [
   {
-    name: "ID",
+    name: "name",
+    label: "Nama",
     options: {
       filter: false,
     },
   },
   {
-    name: "Nama",
-    options: {
-      filter: false,
-    },
-  },
-  {
-    name: "Profesi",
+    name: "jobTitle",
+    label: "Profesi",
     options: {
       filter: false,
     },
@@ -34,8 +30,7 @@ const columns = [
 
 const Index = (props) => {
   useEffect(() => {
-    if (!props.getgetUsersListBA) {
-      props.dispatch(getUsersListtBA());
+    if (!props.getUsersList) {
       firebase
         .database()
         .ref("/users")
@@ -46,7 +41,11 @@ const Index = (props) => {
   });
   return (
     <>
-      <TablefixHeader data={props.getBA} title="Users List" columns={columns} />
+      <TablefixHeader
+        data={props.getUsersList}
+        title="Users List"
+        columns={columns}
+      />
     </>
   );
 };
