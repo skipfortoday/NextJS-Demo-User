@@ -60,7 +60,7 @@ export const postUserAdd = (data) => {
   console.log(data);
   return (dispatch) => {
     axios
-      .post(`http://192.168.0.25:8080/api/users`, data)
+      .post(`${conf.baseURL}/api/users`, data)
       .then(function (response) {
         dispatch({
           type: POST_USER_ADD,
