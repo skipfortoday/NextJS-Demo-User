@@ -115,10 +115,10 @@ export const postUserAdd = (data) => {
   };
 };
 
-export const putUserEdit = (data) => {
+export const putUserEdit = (data, id) => {
   return (dispatch) => {
     axios
-      .put(`${conf.baseURL}/api/users`, data)
+      .put(`${conf.baseURL}/api/users/${id}`, data)
       .then(function (response) {
         dispatch({
           type: PUT_USER_EDIT,

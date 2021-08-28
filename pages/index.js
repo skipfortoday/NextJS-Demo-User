@@ -1,18 +1,12 @@
 import React, { useEffect } from "react";
 import TablefixHeader from "../src/components/tablefixHeader";
-import {
-  clearUsersList,
-  deleteUser,
-  getUsersList,
-} from "../src/actions/usersAction";
+import { clearUsersList, getUsersList } from "../src/actions/usersAction";
 import firebase from "../src/config/firebase";
 import { connect } from "react-redux";
 import BottomNav from "../src/layouts/bottomNav";
-import { IconButton } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-import InfoIcon from "@material-ui/icons/Info";
 import AlertDialogSlide from "../src/components/alertDialog";
+import DeleteAlert from "../src/components/deleteAlert";
+import EditDialog from "../src/components/editDialog";
 
 const mapStateToProps = (state) => {
   return {
@@ -53,17 +47,8 @@ const Index = (props) => {
           return (
             <>
               <AlertDialogSlide idUser={props.getUsersList[dataIndex].id} />
-              <IconButton size="small" onClick={() => console.log("")}>
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() =>
-                  props.dispatch(deleteUser(props.getUsersList[dataIndex].id))
-                }
-              >
-                <DeleteIcon />
-              </IconButton>
+              <EditDialog idUser={props.getUsersList[dataIndex].id} />
+              <DeleteAlert idUser={props.getUsersList[dataIndex].id} />
             </>
           );
         },

@@ -6,17 +6,20 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
 import { connect } from "react-redux";
-import { postUserAdd } from "../actions/usersAction";
-import firebase from "../config/firebase";
+import {
+  putUserEdit,
+  getUserDetail,
+  clearUsersDetail,
+} from "../actions/usersAction";
 
 const mapStateToProps = (state) => {
   return {
-    postUserAdd: state.users.postUserAdd,
-    getUsersList: state.users.getUsersList,
+    putUserEdit: state.users.putUserEdit,
+    getUserDetail: state.users.getUserDetail,
   };
 };
 
@@ -38,47 +41,57 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FormDialog = (props) => {
+const EditDialog = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [validID, setValidID] = React.useState(null);
-  //   const classes = useStyles();
-  const { reset, handleSubmit, control } = useForm();
+  const { reset, handleSubmit, control, setValue } = useForm({
+    defaultValues: {
+      name: "",
+      jobTitle: "",
+      desc: "",
+      location: "",
+      age: "",
+    },
+  });
+
+  useEffect(() => {
+    setValue("name", props.getUserDetail.name);
+    setValue("jobTitle", props.getUserDetail.jobTitle);
+    setValue("desc", props.getUserDetail.desc);
+    setValue("location", props.getUserDetail.location);
+    setValue("age", props.getUserDetail.age);
+  });
 
   const onSubmit = (data) => {
-    props.dispatch(postUserAdd(data));
+    props.dispatch(putUserEdit(data, props.idUser));
     setOpen(false);
-  };
-
-  const validateID = async (value) => {
-    firebase
-      .database()
-      .ref("users")
-      .orderByChild("id")
-      .equalTo(value)
-      .on("value", function (snapshot) {
-        let idkey = snapshot.val();
-        setValidID(idkey);
-      });
-    if (validID != null) return "Hmm ID sudah digunakan";
-    return true;
   };
 
   const handleClickOpen = () => {
+    props.dispatch(getUserDetail(props.idUser));
     setOpen(true);
   };
 
+  // useEffect(() => {
+  //   if (props.getUserDetail) {
+  //     setValue([
+  //       { name: props.getUserDetail?.name },
+  //       { age: props.getUserDetail?.age },
+  //     ]);
+  //   }
+  // }, [props.getUserDetail]);
+
   const handleCloseX = () => {
+    props.dispatch(clearUsersDetail());
     reset();
     setOpen(false);
-    setValidID(null);
   };
 
   return (
     <>
-      <Tooltip title="Tambah User">
+      <Tooltip title="Edit User">
         <IconButton onClick={handleClickOpen}>
-          <AddIcon />
+          <EditIcon />
         </IconButton>
       </Tooltip>
       <Dialog
@@ -86,28 +99,9 @@ const FormDialog = (props) => {
         onClose={handleCloseX}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add User</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit User</DialogTitle>
         <DialogContent>
           <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="id"
-              control={control}
-              defaultValue=""
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  label="User ID"
-                  variant="filled"
-                  value={value}
-                  onChange={onChange}
-                  error={!!error}
-                  helperText={error ? error.message : null}
-                />
-              )}
-              rules={{ required: "User ID required", validate: validateID }}
-            />
             <Controller
               name="name"
               control={control}
@@ -224,4 +218,4 @@ const FormDialog = (props) => {
     </>
   );
 };
-export default connect(mapStateToProps, null)(FormDialog);
+export default connect(mapStateToProps, null)(EditDialog);

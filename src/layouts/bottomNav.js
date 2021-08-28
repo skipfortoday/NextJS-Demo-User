@@ -19,16 +19,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import CreditCardRoundedIcon from "@material-ui/icons/CreditCardRounded";
-import SupervisedUserCircleRoundedIcon from "@material-ui/icons/SupervisedUserCircleRounded";
-import AssignmentIndRoundedIcon from "@material-ui/icons/AssignmentIndRounded";
-import PermMediaRoundedIcon from "@material-ui/icons/PermMediaRounded";
-import HotelRounded from "@material-ui/icons/HotelRounded";
-import BurstModeRoundedIcon from "@material-ui/icons/BurstModeRounded";
-import HowToRegRoundedIcon from "@material-ui/icons/HowToRegRounded";
-import SubtitlesRoundedIcon from "@material-ui/icons/SubtitlesRounded";
+import HttpIcon from "@material-ui/icons/Http";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -101,126 +95,56 @@ export default function BottomNav({ children }) {
           <ListItem
             button
             className={classes.nested}
-            onClick={() => router.push("/master/status-server")}
+            onClick={() => router.push("/")}
           >
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Home" />
           </ListItem>
         </List>
       </List>
       <Divider />
-      <List
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Kartu Pasien
-          </ListSubheader>
-        }
-      >
+      <List>
         <List component="div" disablePadding>
           <ListItem
             button
             className={classes.nested}
-            onClick={() => router.push("/kartu-pasien/data-pasien")}
+            onClick={() => router.push("/bedocs")}
           >
             <ListItemIcon>
-              <SupervisedUserCircleRoundedIcon />
+              <HttpIcon />
             </ListItemIcon>
-            <ListItemText primary="Data Pasien" />
-          </ListItem>
-          <ListItem
-            button
-            className={classes.nested}
-            onClick={() => router.push("/kartu-pasien/perawatan")}
-          >
-            <ListItemIcon>
-              <HotelRounded />
-            </ListItemIcon>
-            <ListItemText primary="Perawatan" />
-          </ListItem>
-          <ListItem
-            button
-            className={classes.nested}
-            onClick={() => router.push("/kartu-pasien/dokter")}
-          >
-            <ListItemIcon>
-              <AssignmentIndRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dokter" />
-          </ListItem>
-          <ListItem
-            button
-            className={classes.nested}
-            onClick={() => router.push("/kartu-pasien/ba")}
-          >
-            <ListItemIcon>
-              <HowToRegRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Beauty Terapist  " />
-          </ListItem>
-          <ListItem
-            button
-            className={classes.nested}
-            onClick={() => router.push("/kartu-pasien/lokasi-foto-before")}
-          >
-            <ListItemIcon>
-              <BurstModeRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Lokasi Foto Before" />
-          </ListItem>
-          <ListItem
-            button
-            className={classes.nested}
-            onClick={() => router.push("/kartu-pasien/lokasi-foto-after")}
-          >
-            <ListItemIcon>
-              <PermMediaRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Lokasi Foto After" />
+            <ListItemText primary="BE docs" />
           </ListItem>
         </List>
       </List>
       <Divider />
-      <List
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Barcode
-          </ListSubheader>
-        }
-      >
-        <ListItem>
-          <ListItemIcon>
-            <SubtitlesRoundedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Comming Soon" />
-        </ListItem>
+      <List>
+        <List component="div" disablePadding>
+          <ListItem
+            button
+            className={classes.nested}
+            onClick={() => router.push("/fedocs")}
+          >
+            <ListItemIcon>
+              <ViewCarouselIcon />
+            </ListItemIcon>
+            <ListItemText primary="FE docs" />
+          </ListItem>
+        </List>
       </List>
       <Divider />
-      <List
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Tcard
-          </ListSubheader>
-        }
-      >
-        <ListItem>
-          <ListItemIcon>
-            <CreditCardRoundedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Comming Soon" />
-        </ListItem>
-      </List>
     </div>
   );
 
   useEffect(() => {
     if (router.pathname == "/") {
       setValue("Home");
-    } else if (router.pathname == "/setting") {
-      setValue("Setting");
+    } else if (router.pathname == "/fedocs") {
+      setValue("fedocs");
     } else {
-      setValue("Data");
+      setValue("bedocs");
     }
     console.log(value);
   });
@@ -229,19 +153,15 @@ export default function BottomNav({ children }) {
       <div className={classes.appBar}>
         <AppBar position="static" className={classes.appBarColor}>
           <Toolbar>
-            {value == "Data" ? (
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-                onClick={toggleDrawer("left", true)}
-              >
-                <MenuIcon />
-              </IconButton>
-            ) : (
-              ""
-            )}
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer("left", true)}
+            >
+              <MenuIcon />
+            </IconButton>
 
             <Typography variant="h6" className={classes.title}>
               Users Demo
@@ -273,16 +193,16 @@ export default function BottomNav({ children }) {
           icon={<AppsIcon />}
         />
         <BottomNavigationAction
-          label="Data"
-          value="Data"
-          onClick={() => router.push("/master/status-server")}
-          icon={<StorageIcon />}
+          label="BE docs"
+          value="bedocs"
+          onClick={() => router.push("/bedocs")}
+          icon={<HttpIcon />}
         />
         <BottomNavigationAction
-          label="Setting"
-          value="Setting"
-          onClick={() => router.push("/setting")}
-          icon={<SettingsIcon />}
+          label="FE docs"
+          value="fedocs"
+          onClick={() => router.push("/fedocs")}
+          icon={<ViewCarouselIcon />}
         />
       </BottomNavigation>
     </div>
